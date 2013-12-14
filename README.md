@@ -8,7 +8,7 @@ Set up a username_local.py file in the config folder, username is your name.
 Add this line at the top of the file:
 
 
-import * from common
+    import * from common
 
 
 In the same file, reference your local DB like so (insert your own values for those surrounded by {{}} ): 
