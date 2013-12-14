@@ -14,26 +14,25 @@ import * from common
 In the same file, reference your local DB like so (insert your own values for those surrounded by {{}} ): 
 
 
+    DATABASES = {
 
-DATABASES = {
+        'default': {
 
-    'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': '{{ POSTGRES DATABASE NAME }}',
 
-        'NAME': '{{ POSTGRES DATABASE NAME }}',
+            'USER': '{{ DATABASE OWNER USERNAME }}',
 
-        'USER': '{{ DATABASE OWNER USERNAME }}',
+            'PASSWORD': '{{ DATABASE OWNER PASSWORD }}',
 
-        'PASSWORD': '{{ DATABASE OWNER PASSWORD }}',
+            'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
 
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+            'PORT': '',                      # Set to empty string for default.
 
-        'PORT': '',                      # Set to empty string for default.
+        }
 
     }
-    
-}
 
 
 In your .bashrc file, include this:
