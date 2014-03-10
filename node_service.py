@@ -1,5 +1,7 @@
 import serial, bglib, time, datetime, json, urllib2
+
 class NodeService(object):
+
     def __init__(self, port, one_meter_rssi, n):
         self.one_meter_rssi = one_meter_rssi
         self.n = n
@@ -36,14 +38,14 @@ class NodeService(object):
         ble.send_command(ser, ble.ble_cmd_gap_discover(1))
         ble.check_activity(ser, 1)
 
-        while (1):
+        while True:
             # check for all incoming data (no timeout, non-blocking)
             ble.check_activity(ser)
 
             # don't burden the CPU
             time.sleep(0.1)
 
-    def ble_evt_gap_scan_response(self,sender,  args):
+    def ble_evt_gap_scan_response(self, sender, args):
         t = datetime.datetime.now()
         disp_list = []
         # print args
@@ -58,7 +60,7 @@ class NodeService(object):
         # print ','.join(disp_list)
         self.calculate_and_post_distance("%ld.%03ld" % (time.mktime(t.timetuple()), t.microsecond/1000), ''.join(['%02X' % b for b in args["sender"][::-1]]),args["rssi"])
 
-    def calculate_and_post_distance(self, milliseconds,sender, rssi):
+    def calculate_and_post_distance(self, milliseconds, sender, rssi):
         est_distance = 10**(-(rssi + self.one_meter_rssi)/(10*self.n))
         print milliseconds,sender,rssi,est_distance
         # print(est_distance)
@@ -101,8 +103,6 @@ class NodeService(object):
         f = urllib2.urlopen(req)
         response = f.read()
         f.close()
-
-        
 
     def timeout(self, sender, args):
         # might want to try the following lines to reset, though it probably
